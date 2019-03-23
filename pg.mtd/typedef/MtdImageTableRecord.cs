@@ -11,6 +11,8 @@ namespace pg.mtd.typedef
 {
     internal sealed class MtdImageTableRecord : IBinaryFile
     {
+        public static readonly int SIZE = 81;
+
         private const int BNAME_MAX_LENGTH = 64;
         private readonly string _name;
         private readonly uint _xPosition;

@@ -7,6 +7,7 @@ namespace pg.mtd.typedef
 {
     internal sealed class MtdHeader : IBinaryFile
     {
+        public static readonly int SIZE = sizeof(uint);
         /*
          * No builder requred.
          * Generating the MtdFile needs to automatically generate a headr based on the data contained.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using pg.mtd.builder;
@@ -14,6 +15,7 @@ namespace pg.mtd.test.builder
     public class MtdImageTableRecordBuilderUnitTest
     {
         private const int MTD_IMAGE_TABLE_RECORD_SIZE = sizeof(byte) * 64 + sizeof(uint) * 4 + sizeof(bool);
+        private const string MTD_RECORD = "testdata\\mtd_single_record.mtd";
 
         [DataRow("ValidName1", 1u, 1u, 1u, 1u, true)]
         [DataRow("ValidName1", 1u, 1u, 1u, 1u, false)]
@@ -215,6 +217,18 @@ namespace pg.mtd.test.builder
             MtdImageTableRecordBuilder builder = new MtdImageTableRecordBuilder();
             byte[] bytes = null;
             Assert.ThrowsException<ArgumentNullException>(() => builder.Build(bytes));
+        }
+
+        [TestMethod]
+        public void MtdImageTableRecordBuilderTest()
+        {
+            string s = Path.Combine(Directory.GetCurrentDirectory(), MTD_RECORD);
+            byte[] array = File.ReadAllBytes(Path.Combine(Directory.GetCurrentDirectory(), MTD_RECORD));
+            MtdImageTableRecordBuilder builder = new MtdImageTableRecordBuilder();
+            MtdImageTableRecord e = builder.Build(array);
+            Assert.IsNotNull(e);
+            Assert.IsNotNull(e.GetBytes());
+            Assert.AreEqual(MTD_IMAGE_TABLE_RECORD_SIZE, e.GetBytes().Length);
         }
     }
 }
