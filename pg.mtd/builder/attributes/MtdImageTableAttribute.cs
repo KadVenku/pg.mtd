@@ -5,7 +5,7 @@ using pg.util.interfaces;
 
 namespace pg.mtd.builder.attributes
 {
-    public class MtdImageTableAttribute : IBuilderAttribute
+    public sealed class MtdImageTableAttribute : IBuilderAttribute
     {
         public List<MtdImageTableRecordAttribute> Images { get; set; } = new List<MtdImageTableRecordAttribute>();
     }

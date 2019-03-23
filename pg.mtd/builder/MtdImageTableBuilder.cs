@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using pg.mtd.builder.attributes;
 using pg.mtd.exceptions;
@@ -14,20 +15,16 @@ namespace pg.mtd.builder
     {
         public MtdImageTable Build(byte[] bytes)
         {
-            if (bytes.Length % 81 != 0)
+            if (bytes == null)
             {
-                throw new InvalidByteArrayException($"The provided byte array does not contain a valid number of entries. Expected length: {(bytes.Length/81 + 1) * 81} bytes; actual lenght {bytes.Length} bytes.");
+                throw new ArgumentNullException($"Expected byte array \'{nameof(bytes)}\', got \'null\' instead.");
             }
-            MtdImageTableAttribute attribute = new MtdImageTableAttribute();
-            MtdImageTableRecordAttributeBuilder attributeBuilder = new MtdImageTableRecordAttributeBuilder();
-            int currentByteIndex = 0;
-            for (int recordIndex = 0; recordIndex < bytes.Length / 81; recordIndex++)
+            if (bytes.Length % MtdImageTableRecord.SIZE != 0)
             {
-                byte[] b = new List<byte>(bytes).GetRange(currentByteIndex, 81).ToArray();
-                MtdImageTableRecordAttribute a = attributeBuilder.Build(b);
-                attribute.Images.Add(a);
-                currentByteIndex += 81;
+                throw new InvalidByteArrayException($"The provided byte array does not contain a valid number of entries. Expected length: {(bytes.Length/MtdImageTableRecord.SIZE + 1) * MtdImageTableRecord.SIZE} bytes; actual length {bytes.Length} bytes.");
             }
+            MtdImageTableAttributeBuilder builder = new MtdImageTableAttributeBuilder();
+            MtdImageTableAttribute attribute = builder.Build(bytes);
             return Build(attribute);
         }
 

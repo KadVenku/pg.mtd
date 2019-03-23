@@ -11,17 +11,15 @@ namespace pg.mtd.builder
 {
     internal sealed class MtdImageTableRecordBuilder : IBinaryFileBuilder<MtdImageTableRecord, MtdImageTableRecordAttribute>
     {
-        private const int STRUCT_SIZE = 81;
-
         public MtdImageTableRecord Build(byte[] bytes)
         {
             if (bytes == null)
             {
                 throw new ArgumentNullException($"Expected byte array \'{nameof(bytes)}\', got \'null\' instead.");
             }
-            if (bytes.Length != STRUCT_SIZE)
+            if (bytes.Length != MtdImageTableRecord.SIZE)
             {
-                throw new InvalidByteArrayException($"The byte stream provided does not match the size of a valid \'{nameof(MtdImageTableRecord)}\'. Expected {STRUCT_SIZE} bytes, but received {bytes.Length}.");
+                throw new InvalidByteArrayException($"The byte stream provided does not match the size of a valid \'{nameof(MtdImageTableRecord)}\'. Expected {MtdImageTableRecord.SIZE} bytes, but received {bytes.Length}.");
             }
             MtdImageTableRecordAttributeBuilder attributeBuilder = new MtdImageTableRecordAttributeBuilder();
             return Build(attributeBuilder.Build(bytes));
