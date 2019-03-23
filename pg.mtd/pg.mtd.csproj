@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Authors>Lukas Grünwald</Authors>
+    <Company />
+    <Copyright>2019 Lukas Grünwald</Copyright>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\pg.utils\pg.util\pg.util.csproj" />
+  </ItemGroup>
 
 </Project>
