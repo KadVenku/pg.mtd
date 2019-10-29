@@ -19,10 +19,13 @@ namespace pg.mtd.builder
             {
                 throw new ArgumentNullException($"Expected byte array \'{nameof(bytes)}\', got \'null\' instead.");
             }
-            if (bytes.Length % MtdImageTableRecord.SIZE != 0)
+
+            if (bytes.Length % new MtdImageTableRecord().Size() != 0)
             {
-                throw new InvalidByteArrayException($"The provided byte array does not contain a valid number of entries. Expected length: {(bytes.Length/MtdImageTableRecord.SIZE + 1) * MtdImageTableRecord.SIZE} bytes; actual length {bytes.Length} bytes.");
+                throw new InvalidByteArrayException(
+                    $"The provided byte array does not contain a valid number of entries. Expected length: {(bytes.Length / new MtdImageTableRecord().Size() + 1) * new MtdImageTableRecord().Size()} bytes; actual length {bytes.Length} bytes.");
             }
+
             MtdImageTableAttributeBuilder builder = new MtdImageTableAttributeBuilder();
             MtdImageTableAttribute attribute = builder.Build(bytes);
             return Build(attribute);
@@ -34,6 +37,7 @@ namespace pg.mtd.builder
             {
                 throw new AttributeNullException(nameof(attribute));
             }
+
             return new MtdImageTable(attribute);
         }
     }

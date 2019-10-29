@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using pg.util.interfaces;
+
 [assembly: InternalsVisibleTo("pg.mtd.test")]
 
 namespace pg.mtd.builder.attributes

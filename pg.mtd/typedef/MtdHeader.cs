@@ -2,16 +2,16 @@
 using System.Runtime.CompilerServices;
 using pg.mtd.builder.attributes;
 using pg.util.interfaces;
+
 [assembly: InternalsVisibleTo("pg.mtd.test")]
 
 namespace pg.mtd.typedef
 {
-    internal sealed class MtdHeader : IBinaryFile
+    internal sealed class MtdHeader : IBinaryFile, ISizeable
     {
-        public static readonly int SIZE = sizeof(uint);
         /*
-         * No builder requred.
-         * Generating the MtdFile needs to automatically generate a headr based on the data contained.
+         * No builder required.
+         * Generating the MtdFile needs to automatically generate a header based on the data contained.
          */
         private readonly uint _recordCount;
 
@@ -19,10 +19,20 @@ namespace pg.mtd.typedef
         {
             _recordCount = attribute.RecordCount;
         }
-        
+
+        internal MtdHeader()
+        {
+            _recordCount = 0;
+        }
+
         public byte[] GetBytes()
         {
             return BitConverter.GetBytes(_recordCount);
+        }
+
+        public uint Size()
+        {
+            return sizeof(uint);
         }
     }
 }

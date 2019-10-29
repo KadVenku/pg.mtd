@@ -1,16 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Lukas Grünwald</Authors>
     <Company />
-    <Copyright>2019 Lukas Grünwald</Copyright>
+    <Copyright>2019 - Lukas Grünwald</Copyright>
     <SignAssembly>false</SignAssembly>
+    <Title>pg.mtd</Title>
+    <PackageProjectUrl>https://github.com/KadVenku/pg.mtd</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/KadVenku/pg.mtd</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>petroglyph, alamo, glyphx</PackageTags>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\pg.utils\pg.util\pg.util.csproj" />
+    <PackageReference Include="pg.util" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

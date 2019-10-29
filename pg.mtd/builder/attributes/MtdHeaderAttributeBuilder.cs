@@ -11,6 +11,7 @@ namespace pg.mtd.builder.attributes
             {
                 throw new ArgumentNullException($"Expected byte array \'{nameof(bytes)}\', got \'null\' instead.");
             }
+
             return new MtdHeaderAttribute {RecordCount = BitConverter.ToUInt32(bytes, 0)};
         }
     }

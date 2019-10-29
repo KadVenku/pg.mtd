@@ -3,11 +3,12 @@ using System.Runtime.CompilerServices;
 using pg.mtd.builder;
 using pg.mtd.builder.attributes;
 using pg.util.interfaces;
+
 [assembly: InternalsVisibleTo("pg.mtd.test")]
 
 namespace pg.mtd.typedef
 {
-    internal sealed class MtdImageTable : IBinaryFile
+    internal sealed class MtdImageTable : IBinaryFile, ISizeable
     {
         private readonly List<MtdImageTableRecord> _mtdImageTableRecords = new List<MtdImageTableRecord>();
 
@@ -30,6 +31,11 @@ namespace pg.mtd.typedef
             }
 
             return bytes.ToArray();
+        }
+
+        public uint Size()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
