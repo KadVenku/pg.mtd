@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pg.mtd", "pg.mtd\pg.mtd.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pg.mtd.test", "pg.mtd.test\pg.mtd.test.csproj", "{F721F6E1-B388-42E0-AF79-CB02A0F508F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pg.util", "pg.utils\pg.util\pg.util.csproj", "{BA180F03-EC10-4E7D-8638-39D18D11640C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

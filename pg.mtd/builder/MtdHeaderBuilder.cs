@@ -6,7 +6,7 @@ using pg.util.interfaces;
 
 namespace pg.mtd.builder
 {
-    internal sealed class MtdHeaderBuilder : IBinaryFileBuilder<MtdHeader,MtdHeaderAttribute>
+    internal sealed class MtdHeaderBuilder : IBinaryFileBuilder<MtdHeader, MtdHeaderAttribute>
     {
         public MtdHeader Build(byte[] bytes)
         {
@@ -14,10 +14,13 @@ namespace pg.mtd.builder
             {
                 throw new ArgumentNullException($"Expected byte array \'{nameof(bytes)}\', got \'null\' instead.");
             }
-            if (bytes.Length != MtdHeader.SIZE)
+
+            if (bytes.Length != new MtdHeader().Size())
             {
-                throw new InvalidByteArrayException($"The byte stream provided does not match the size of a valid \'{nameof(MtdHeader)}\'. Expected {MtdHeader.SIZE} bytes, but received {bytes.Length} bytes.");
+                throw new InvalidByteArrayException(
+                    $"The byte stream provided does not match the size of a valid \'{nameof(MtdHeader)}\'. Expected {new MtdHeader().Size()} bytes, but received {bytes.Length} bytes.");
             }
+
             MtdHeaderAttributeBuilder mtdHeaderAttributeBuilder = new MtdHeaderAttributeBuilder();
             MtdHeaderAttribute attribute = mtdHeaderAttributeBuilder.Build(bytes);
             return Build(attribute);

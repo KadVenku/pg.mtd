@@ -5,11 +5,13 @@ using pg.mtd.exceptions;
 using pg.mtd.typedef;
 using pg.util.exceptions;
 using pg.util.interfaces;
+
 [assembly: InternalsVisibleTo("pg.mtd.test")]
 
 namespace pg.mtd.builder
 {
-    internal sealed class MtdImageTableRecordBuilder : IBinaryFileBuilder<MtdImageTableRecord, MtdImageTableRecordAttribute>
+    internal sealed class
+        MtdImageTableRecordBuilder : IBinaryFileBuilder<MtdImageTableRecord, MtdImageTableRecordAttribute>
     {
         public MtdImageTableRecord Build(byte[] bytes)
         {
@@ -17,10 +19,13 @@ namespace pg.mtd.builder
             {
                 throw new ArgumentNullException($"Expected byte array \'{nameof(bytes)}\', got \'null\' instead.");
             }
-            if (bytes.Length != MtdImageTableRecord.SIZE)
+
+            if (bytes.Length != new MtdImageTableRecord().Size())
             {
-                throw new InvalidByteArrayException($"The byte stream provided does not match the size of a valid \'{nameof(MtdImageTableRecord)}\'. Expected {MtdImageTableRecord.SIZE} bytes, but received {bytes.Length}.");
+                throw new InvalidByteArrayException(
+                    $"The byte stream provided does not match the size of a valid \'{nameof(MtdImageTableRecord)}\'. Expected {new MtdImageTableRecord().Size()} bytes, but received {bytes.Length}.");
             }
+
             MtdImageTableRecordAttributeBuilder attributeBuilder = new MtdImageTableRecordAttributeBuilder();
             return Build(attributeBuilder.Build(bytes));
         }
@@ -29,8 +34,10 @@ namespace pg.mtd.builder
         {
             if (attribute == null)
             {
-                throw new AttributeNullException($"Building an instance of \'{nameof(MtdImageTableRecord)}\' requires a non-null argument of type \'{nameof(MtdImageTableRecordAttribute)}\'.");
+                throw new AttributeNullException(
+                    $"Building an instance of \'{nameof(MtdImageTableRecord)}\' requires a non-null argument of type \'{nameof(MtdImageTableRecordAttribute)}\'.");
             }
+
             return new MtdImageTableRecord(attribute);
         }
     }

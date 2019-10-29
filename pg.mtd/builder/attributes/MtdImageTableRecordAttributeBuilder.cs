@@ -4,6 +4,7 @@ using System.Text;
 using pg.mtd.exceptions;
 using pg.mtd.typedef;
 using pg.util.interfaces;
+
 [assembly: InternalsVisibleTo("pg.mtd.test")]
 
 namespace pg.mtd.builder.attributes
@@ -24,10 +25,13 @@ namespace pg.mtd.builder.attributes
             {
                 throw new ArgumentNullException($"Expected byte array \'{nameof(bytes)}\', got \'null\' instead.");
             }
-            if (bytes.Length != MtdImageTableRecord.SIZE)
+
+            if (bytes.Length != new MtdImageTableRecord().Size())
             {
-                throw new InvalidByteArrayException($"The byte stream provided does not match the size of a valid \'{nameof(MtdImageTableRecord)}\'. Expected {MtdImageTableRecord.SIZE} bytes, but received {bytes.Length}.");
+                throw new InvalidByteArrayException(
+                    $"The byte stream provided does not match the size of a valid \'{nameof(MtdImageTableRecord)}\'. Expected {new MtdImageTableRecord().Size()} bytes, but received {bytes.Length}.");
             }
+
             string paddedName = Encoding.ASCII.GetString(bytes, _C_ICON_NAME_OFFSET, _C_ICON_NAME_SIZE);
             string name = Unpad(paddedName);
             uint posX = BitConverter.ToUInt32(bytes, _C_POSITION_X_OFFSET);
@@ -35,20 +39,29 @@ namespace pg.mtd.builder.attributes
             uint exX = BitConverter.ToUInt32(bytes, _C_EXTENSION_X_OFFSET);
             uint exY = BitConverter.ToUInt32(bytes, _C_EXTENSION_Y_OFFSET);
             bool alpha = BitConverter.ToBoolean(bytes, _C_ALPHA_OFFSET);
-            return new MtdImageTableRecordAttribute() {Name = name, XPosition = posX, YPosition = posY, XExtend = exX, YExtend = exY, Alpha = alpha};
+            return new MtdImageTableRecordAttribute()
+            {
+                Name = name,
+                XPosition = posX,
+                YPosition = posY,
+                XExtend = exX,
+                YExtend = exY,
+                Alpha = alpha
+            };
         }
 
         private static string Unpad(string paddedName)
         {
-            string unpaddedName = "";
+            StringBuilder builder = new StringBuilder();
             foreach (char c in paddedName)
             {
                 if (c != '\0')
                 {
-                    unpaddedName += c;
+                    builder.Append(c);
                 }
             }
-            return unpaddedName;
+
+            return builder.ToString();
         }
     }
 }

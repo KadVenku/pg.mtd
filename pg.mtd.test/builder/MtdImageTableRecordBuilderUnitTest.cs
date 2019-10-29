@@ -15,7 +15,7 @@ namespace pg.mtd.test.builder
     public class MtdImageTableRecordBuilderUnitTest
     {
         private const int MTD_IMAGE_TABLE_RECORD_SIZE = sizeof(byte) * 64 + sizeof(uint) * 4 + sizeof(bool);
-        private const string MTD_RECORD = "testdata\\mtd_single_record.mtd";
+        private readonly string MTD_RECORD = Path.Combine("testdata", "mtd_single_record.mtd");
 
         [DataRow("ValidName1", 1u, 1u, 1u, 1u, true)]
         [DataRow("ValidName1", 1u, 1u, 1u, 1u, false)]
@@ -30,7 +30,8 @@ namespace pg.mtd.test.builder
         [DataRow("ValidName6", 6u, 6u, 6u, 6u, true)]
         [DataRow("ValidName6", 6u, 6u, 6u, 6u, false)]
         [DataTestMethod]
-        public void MtdImageTableRecordBuilderBuildMtdImageTableRecordTest(string name, uint posX, uint posY, uint exX, uint exY, bool alpha)
+        public void MtdImageTableRecordBuilderBuildMtdImageTableRecordTest(string name, uint posX, uint posY, uint exX,
+            uint exY, bool alpha)
         {
             List<byte> inputAsBytes = new List<byte>();
             byte[] n = Encoding.ASCII.GetBytes(name);
@@ -54,7 +55,15 @@ namespace pg.mtd.test.builder
             byte[] inAsByteArray = inputAsBytes.ToArray();
 
             MtdImageTableRecordBuilder builder = new MtdImageTableRecordBuilder();
-            MtdImageTableRecordAttribute attribute = new MtdImageTableRecordAttribute { Name = name, XPosition = posX, YPosition = posY, XExtend = exX, YExtend = exY, Alpha = alpha };
+            MtdImageTableRecordAttribute attribute = new MtdImageTableRecordAttribute
+            {
+                Name = name,
+                XPosition = posX,
+                YPosition = posY,
+                XExtend = exX,
+                YExtend = exY,
+                Alpha = alpha
+            };
             MtdImageTableRecord record = builder.Build(attribute);
             MtdImageTableRecord recordFromBytes = builder.Build(inAsByteArray);
             byte[] bytesFromAttributes = record.GetBytes();
@@ -67,6 +76,7 @@ namespace pg.mtd.test.builder
             {
                 Assert.AreEqual(bytesFromAttributes[i], inAsByteArray[i]);
             }
+
             for (int i = 0; i < bytesFromBytes.Length; i++)
             {
                 Assert.AreEqual(bytesFromBytes[i], inAsByteArray[i]);

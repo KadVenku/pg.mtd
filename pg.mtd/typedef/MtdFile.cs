@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using pg.mtd.builder;
 using pg.mtd.builder.attributes;
 using pg.util.interfaces;
+
 [assembly: InternalsVisibleTo("pg.mtd.test")]
 
 namespace pg.mtd.typedef
@@ -24,10 +25,13 @@ namespace pg.mtd.typedef
             }
             else
             {
-                mtdHeaderBuilder.Build(new MtdHeaderAttribute() {RecordCount = Convert.ToUInt32(attribute.ImageTableAttribute.Images.Count)});
+                mtdHeaderBuilder.Build(new MtdHeaderAttribute()
+                {
+                    RecordCount = Convert.ToUInt32(attribute.ImageTableAttribute.Images.Count)
+                });
             }
         }
-        
+
         public byte[] GetBytes()
         {
             List<byte> bytes = new List<byte>();
