@@ -1,4 +1,7 @@
 # pg.mtd
+
+> ⚠️ **WARNING**: In an attempt to solidify and unite all Alamo-Engine related tools/libraries made by the Empire at War community, development has been moved to the consolidated [AlamoEngine-Tools/PetroglyphTools](https://github.com/AlamoEngine-Tools/PetroglyphTools) repository.
+
 Implements the Petroglyph v1.0 mtd file type in `C#`.
 
 Special thanks to [@MikeLankamp](https://github.com/MikeLankamp) for decoding the files and hosting them on [Petrolution](https://modtools.petrolution.net/docs/MtdFileFormat).
